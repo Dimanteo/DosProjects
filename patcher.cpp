@@ -77,6 +77,8 @@ sf::Text init_text(sf::Text& text, const wchar_t* string, int size, const sf::Fo
 
 bool update_scene(sf::Text& text, ProgressBar& bar, sf::Clock& clock);
 
+void center_text(sf::Text& text, int width);
+
 bool patch();
 
 
@@ -126,6 +128,7 @@ int main()
         if (!scene_over)
         {
             scene_over = update_scene(phrase, bar, clock);
+            center_text(phrase, windowWidth);
             window.clear(BACKGROUND_COLOR);
             bar.draw(window);
             window.draw(title);
@@ -194,6 +197,14 @@ bool update_scene(sf::Text& text, ProgressBar& bar, sf::Clock& clock)
         text.setString(PHRASES[rand() % 5]);
     }
     return false;
+}
+
+
+void center_text(sf::Text& text, int width)
+{
+    sf::FloatRect bounds = text.getGlobalBounds();
+    float x_offset = (float)(width - bounds.width) / 2;
+    text.setPosition(x_offset, text.getPosition().y);
 }
 
 
